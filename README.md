@@ -45,7 +45,7 @@ $ http://localhost:3000/api/v1
 #
 
 >Method: **GET** \
-> Route: **/anime/lastest**
+> Route: **/animes/lastest**
 
 ```json
 >> return lastest episodes added to the site
@@ -58,6 +58,30 @@ $ http://localhost:3000/api/v1
       }
    ],
    "success": true
+```
+>Method: **GET** \
+> Route: **/search/:input**
+
+```json
+>> return animes wich name match with input search
+   "animes": [
+       {
+         "title": "Toradora!",
+         "id": "toradora-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/toradora.jpg"
+       },
+       {
+         "title": "Toradora!: SOS!",
+         "id": "toradora-sos-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/toradora-sos.jpg"
+       },
+       {
+         "title": "Toradora!: Bentou no Gokui",
+         "id": "toradora-bentou-no-gokui-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/toradora-bentou-no-gokui.jpg"
+       }
+  ],
+  "success": true
 ```
 #
 >Method: **GET** \
@@ -85,7 +109,7 @@ $ http://localhost:3000/api/v1
 ```
 #
 >Method: **GET** \
-> Route: **/anime/episode/:id**
+> Route: **/episode/:id**
 
 ```json
 >> return a single episode video information
@@ -95,7 +119,7 @@ $ http://localhost:3000/api/v1
 ```
 #
 >Method: **GET** \
-> Route: **/anime/gender/:genderId**
+> Route: **/gender/:genderId**
 
 ```json
 >> return animes that match with the input gender id
@@ -110,7 +134,7 @@ $ http://localhost:3000/api/v1
 ```
 #
 >Method: **GET** \
-> Route: **/anime/letter/:letter**
+> Route: **/letter/:letter**
 
 ```json
 >> return animes wich name contains the input letter
@@ -158,7 +182,7 @@ $ http://localhost:3000/api/v1
 ```
 #
 >Method: **GET** \
-> Route: **/ova/:pageNumber**
+> Route: **/ovas/:pageNumber**
 
 ```json
 >> return ovas by page, because in site can't search ovas by input
