@@ -204,7 +204,8 @@ async function getAnime(req, res) {
             description,
             status,
             genres,
-            img
+            img,
+            id
          }
       })
 
