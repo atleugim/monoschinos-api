@@ -19,8 +19,10 @@
 
 ## **Usage**
 > **Install** 
-```
-$ git clone https://github.com/atleugim/monoschinos-api.git
+```bash
+$ git clone https://github.com/atleugim/monoschinos-api.git 
+
+$ npm install
 ```
 
 > **Run server with _NODE_**: 
