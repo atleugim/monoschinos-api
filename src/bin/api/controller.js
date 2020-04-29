@@ -255,11 +255,13 @@ async function getEpisode(req, res) {
 
       // Get video link OP1
       let title = $('.Episode .Title-epi').text();
+      let animeId = id.split('-')[0];
+      animeId = `${animeId}-sub-espanol`;
       let epNumber = title.split(' ');
-         epNumber = parseInt(epNumber[epNumber.length - 3]);
+      epNumber = parseInt(epNumber[epNumber.length - 3]);
       let video = $('.Episode .content .row .TPlayer #Opt1 iframe').attr('src');
-         video = video.split('=')[1]
-         video = decodeURIComponent(video)
+      video = video.split('=')[1]
+      video = decodeURIComponent(video)
 
       /* Old
          video1 = video1.split('=')[1];
@@ -285,6 +287,7 @@ async function getEpisode(req, res) {
       res.status(200)
          .json({
             title,
+            animeId,
             epNumber,
             video,
             download,
