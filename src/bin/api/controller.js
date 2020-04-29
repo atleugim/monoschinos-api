@@ -255,7 +255,8 @@ async function getEpisode(req, res) {
 
       // Get video link OP1
       let title = $('.Episode .Title-epi').text();
-      let animeId = id.split('-')[0];
+      let animeId = id.split('-');
+      animeId = animeId.splice(0, animeId.length - 2).join('-')
       animeId = `${animeId}-sub-espanol`;
       let epNumber = title.split(' ');
       epNumber = parseInt(epNumber[epNumber.length - 3]);
