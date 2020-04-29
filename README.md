@@ -83,12 +83,62 @@ $ http://localhost:3000/api/v1
   ],
   "success": true
 ```
+
+#
+>Method: **GET** \
+> Route: **/genders**
+
+```js
+// return all genders options for gender search
+   "genders": [
+      {
+         "title": "Todo"
+      },
+      {
+         "title": "Acción",
+         "id": "accion"
+      },
+      {
+         "title": "Aventura",
+         "id": "aventura"
+      },
+      // ...
+   ]
+  "success": true
+```
+
+#
+>Method: **GET** \
+> Route: **/letters**
+
+```js
+// return all letters options for letter search
+   "letters": [
+      {
+         "title": "Todo"
+      },
+      {
+         "title": "#",
+         "id": "0-9"
+      },
+      {
+         "title": "A",
+         "id": "a"
+      },
+      {
+         "title": "B",
+         "id": "b"
+      },
+      // ...
+   ]
+  "success": true
+```
 #
 >Method: **GET** \
 > Route: **/anime/:id**
 
-```json
->> return a single anime information
+```js
+// return a single anime information
    "anime": {
       "title": "Toradora! Sub Español",
       "description": "Ryuuji Takasu es un estudiante...",
@@ -121,14 +171,15 @@ $ http://localhost:3000/api/v1
 >Method: **GET** \
 > Route: **/gender/:genderId**
 
-```json
->> return animes that match with the input gender id
+```js
+// return animes that match with the input gender id
    "animes": [
       {
          "id": "yesterday-wo-utatte-extra-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/yesterday-wo-utatte-extra.png",
          "title": "Yesterday wo Utatte Extra\t"
       },
+      // ...
    ],
    "success": true
 ```
@@ -136,62 +187,33 @@ $ http://localhost:3000/api/v1
 >Method: **GET** \
 > Route: **/letter/:letter**
 
-```json
->> return animes wich name contains the input letter
+```js
+// return animes wich name contains the input letter
    "animes": [
       {
          "id": "tv-yarou-nanaana-kaibutsu-kraken-wo-oe-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/tv-yarou-nanaana-kaibutsu-kraken-wo-oe.jpg",
          "title": "TV Yarou Nanaana: Kaibutsu Kraken wo Oe!"
       },
+      // ...
    ],
    "success": true
 ```
 
-#
->Method: **GET** \
-> Route: **/animes/gendersAndLetters**
 
-```json
->> return genders an letters with id (for gender or letter search)
-    "genders": [
-      {
-        "title": "Acción",
-        "id": "accion"
-      },
-      {
-        "title": "Aventura",
-        "id": "aventura"
-      },
-   ],
-   "letters": [
-      {
-        "title": "#",
-        "id": "0-9"
-      },
-      {
-        "title": "A",
-        "id": "a"
-      },
-      {
-        "title": "B",
-        "id": "b"
-      },
-    ]
-   "success": true
-```
 #
 >Method: **GET** \
 > Route: **/ovas/:pageNumber**
 
-```json
->> return ovas by page, because in site can't search ovas by input
+```js
+// return ovas by page, because in site can't search ovas by input
    "ovas": [
       {
          "id": "strike-the-blood-iv-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/strike-the-blood-iv.jpg",
          "title": "Strike the Blood IV"
       },
+      // ...
    ]
    "success": true
 ```

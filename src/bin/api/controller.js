@@ -52,20 +52,16 @@ async function getLastest(req, res) {
    }
 }
 
-// Inside functions
-async function getGendersAndLetters(req, res) {
+async function getGenders(req, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.lastest}/animes`);
       const $ = cheerio.load(bodyResponse.data);
 
       const genders = []
-      const letters = []
 
       let gendersContainer = $('.filter-container .clearfix .float-left')[1];
-      let lettersContainer = $('.filter-container .clearfix .float-left')[3];
 
       let genres = $(gendersContainer).find('.dropdown-menu .dropdown-item');
-      let letts = $(lettersContainer).find('.dropdown-menu .dropdown-item');
 
       genres.each((i, e) => {
          let el = $(e)
@@ -82,6 +78,31 @@ async function getGendersAndLetters(req, res) {
          }
          genders.push(gender)
       })
+
+      res.status(200)
+         .json({
+            genders,
+            success: true
+         })
+
+   } catch (err) {
+      res.status(500)
+         .json({
+            message: err.message,
+            success: false
+         })
+   }
+}
+
+async function getLetters(req, res) {
+   try {
+      const bodyResponse = await axios.get(`${apiConfig.lastest}/animes`);
+      const $ = cheerio.load(bodyResponse.data);
+
+      const letters = []
+
+      let lettersContainer = $('.filter-container .clearfix .float-left')[3];
+      let letts = $(lettersContainer).find('.dropdown-menu .dropdown-item');
 
       letts.each((i, e) => {
          let el = $(e)
@@ -101,7 +122,6 @@ async function getGendersAndLetters(req, res) {
 
       res.status(200)
          .json({
-            genders,
             letters,
             success: true
          })
@@ -403,7 +423,8 @@ async function ovaSearch(req, res) {
 
 module.exports = {
    getLastest,
-   getGendersAndLetters,
+   getGenders,
+   getLetters,
    animeSearch,
    getAnime,
    getEpisode,
