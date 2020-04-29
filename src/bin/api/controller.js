@@ -254,6 +254,9 @@ async function getEpisode(req, res) {
       const $ = cheerio.load(bodyResponse.data);
 
       // Get video link OP1
+      let title = $('.Episode .Title-epi').text();
+      let epNumber = title.split(' ');
+         epNumber = parseInt(epNumber[epNumber.length - 3]);
       let video = $('.Episode .content .row .TPlayer #Opt1 iframe').attr('src');
 
       /* Old
@@ -279,6 +282,8 @@ async function getEpisode(req, res) {
 
       res.status(200)
          .json({
+            title,
+            epNumber,
             video,
             download,
             success: true
