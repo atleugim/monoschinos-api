@@ -268,10 +268,29 @@ async function getEpisode(req, res) {
       animeId = `${animeId}-sub-espanol`;
       let epNumber = title.split(' ');
       epNumber = parseInt(epNumber[epNumber.length - 3]);
-      let video = $('.Episode .content .row .TPlayer #Opt1 iframe').attr('src');
-      video = video.split('=')[1]
-      video = decodeURIComponent(video)
 
+      const videos = [];
+      let videosContainer = $('.Episode .content .row .TPlayer').text();
+      
+      $(videosContainer).each((i, e) => {
+         let el = $(e);
+         
+         let video = el.attr('src');
+
+         if (video) {
+            video = video.split('url=')[1]
+            video = decodeURIComponent(video)
+            video = video.split('&id')[0]
+         }
+         
+         
+         if (video) {
+            videos.push(video)
+         }
+         
+      })
+      
+      // res.send(videos)
       /* Old
          video1 = video1.split('=')[1];
          video1 = video1.split('&')[0];
@@ -290,16 +309,26 @@ async function getEpisode(req, res) {
          let vidSource1 = sources1.split("'")[1]
       */
 
-      let download = $('.Episode .content .row #downloads .table tbody tr td')[2];
-      download = $(download).find('a').attr('href');
+      let downloads = [];
+      let downloadsContainer = $('.Episode .content .row #downloads table tbody tr');
+
+      $(downloadsContainer).each((i, e) => {
+         let el = $(e);
+
+         let download = el.find('a').attr('href')
+
+         if (download) {
+            downloads.push(download);
+         }
+      })
 
       res.status(200)
          .json({
             title,
             animeId,
             epNumber,
-            video,
-            download,
+            videos,
+            downloads,
             success: true
          })
 
