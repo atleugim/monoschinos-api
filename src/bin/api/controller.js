@@ -19,16 +19,14 @@ async function getLastest(req, res) {
          let el = $(e);
          let title = el.find('.Title').html().split('\t')[0]
          let img = el.find('.Image img').attr('src');
+         let nEpisode = el.find('.dataEpi .episode').text();
+         nEpisode = parseInt(nEpisode.split('\n')[1])
          let id = el.find('a').attr('href');
          id = id.split('/')[4]
          id = id.split('-')
          id.splice(id.length - 2, 2);
-         if (!id.includes('sub')) {
-            id = id.join('-')
-            id = `${id}-sub-espanol`
-         }
-         let nEpisode = el.find('.dataEpi .episode').text();
-         nEpisode = nEpisode.split('\n')[1]
+         id = `${id.join('-')}-episodio-${nEpisode}`;
+         
 
          let anime = {
             title,
