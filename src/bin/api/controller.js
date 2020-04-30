@@ -22,8 +22,11 @@ async function getLastest(req, res) {
          let id = el.find('a').attr('href');
          id = id.split('/')[4]
          id = id.split('-')
-         id.splice(id.length - 2, 2)
-         id = id.join('-')
+         id.splice(id.length - 2, 2);
+         if (!id.includes('sub')) {
+            id = id.join('-')
+            id = `${id}-sub-espanol`
+         }
          let nEpisode = el.find('.dataEpi .episode').text();
          nEpisode = nEpisode.split('\n')[1]
 
