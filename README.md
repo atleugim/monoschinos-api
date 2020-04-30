@@ -49,23 +49,30 @@ $ http://localhost:3000/api/v1
 >Method: **GET** \
 > Route: **/animes/lastest**
 
-```json
->> return lastest episodes added to the site
+```js
+// return lastest episodes added to the site
    "animes": [
-      {
-         "title": "Black Clover",
-         "img": "https://monoschinos.com/image/episode/290/165/black-clover-132.jpg",
-         "id": "black-clover",
-         "nEpisode": "132"
-      }
+    {
+      "title": "Heya Camp: Sauna to Gohan to Miwa Bike",
+      "img": "https://monoschinos.com/image/portada/290/165/heya-camp-sauna-to-gohan-to-miwa-bike.jpg",
+      "id": "heya-camp-sauna-to-gohan-to-miwa-bike-sub-espanol",
+      "nEpisode": "1"
+    },
+    {
+      "title": "Plunderer",
+      "img": "https://monoschinos.com/image/portada/290/165/plunderer.jpg",
+      "id": "plunderer-sub-espanol",
+      "nEpisode": "16"
+    },
+      // ...
    ],
    "success": true
 ```
 >Method: **GET** \
 > Route: **/search/:input**
 
-```json
->> return animes wich name match with input search
+```js
+// return animes wich name match with input search
    "animes": [
        {
          "title": "Toradora!",
@@ -81,7 +88,8 @@ $ http://localhost:3000/api/v1
          "title": "Toradora!: Bentou no Gokui",
          "id": "toradora-bentou-no-gokui-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/toradora-bentou-no-gokui.jpg"
-       }
+       },
+       // ...
   ],
   "success": true
 ```
@@ -165,8 +173,11 @@ $ http://localhost:3000/api/v1
 
 ```json
 >> return a single episode video information
-   "video": "https://monoschinos.com/reproductor?url=https%3A%2F%2Freproductor.monoschinos.com%2Faqua%2Fcl%3Furl%3DTORA%21+-+01.mp4&id=5991",
-   "download": "https://mega.nz/#!f6JzRASL!8SRmVCgGWpB1Ap_VtTqrh8NQw8cB_h5BaK7SvpkTWpU",
+   "title": "Plunderer 16 Sub Español",
+   "animeId": "plunderer-sub-espanol",
+   "epNumber": 16,
+   "video": "https://reproductor.monoschinos.com/aqua/cl?url=16PLUNDER.mp4&id",
+   "download": "https://mega.nz/#!yQ93jbqT!PzEiY4T5nQPPIVLF7gWXkHhyfyB8agmNUJM7DVDKPbk",
    "success": true
 ```
 #
@@ -179,7 +190,7 @@ $ http://localhost:3000/api/v1
       {
          "id": "yesterday-wo-utatte-extra-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/yesterday-wo-utatte-extra.png",
-         "title": "Yesterday wo Utatte Extra\t"
+         "title": "Yesterday wo Utatte Extra"
       },
       // ...
    ],
