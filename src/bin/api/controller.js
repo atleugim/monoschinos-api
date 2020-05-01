@@ -189,12 +189,16 @@ async function getAnime(req, res) {
 
       let anime = new Object();
 
-      let genres = []
+      let genders = []
       let episodes = []
       $('.container .mt-2 .row').each((i, e) => {
          let el = $(e);
-         genres.push(el.find('.col-sm-9 .generos a').html())
-         genres.push(el.find('.col-sm-9 .generos a').next().html())
+         
+         el.find('.col-sm-9 .generos a').each((i, e) => {
+            let el = $(e);
+            genders.push(el.text())
+         })
+
          let title = el.find('.col-sm-9 h1.Title').text(),
             description = el.find('.col-sm-9 .Description p').text(),
             status = el.find('.col-sm-9 .Type').text().trim(),
@@ -204,7 +208,7 @@ async function getAnime(req, res) {
             title,
             description,
             status,
-            genres,
+            genders,
             img,
             id
          }
