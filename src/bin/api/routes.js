@@ -19,7 +19,8 @@ api.get('/', (req, res) => {
       .json({
          message: 'API Working!',
          author: 'Miguel Vega',
-         githubRepository: 'https://github.com/atleugim/monoschinos-api',
+         repository: 'https://github.com/atleugim/monoschinos-api',
+         docs: 'https://github.com/atleugim/monoschinos-api/blob/master/README.md',
          endpoints: {
             lastest: '/animes/lastest',
             search: '/search/:name',
