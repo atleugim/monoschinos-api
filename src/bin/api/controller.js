@@ -242,10 +242,10 @@ async function getAnime(req, res) {
             genders.push(gender)
          })
 
-         let title = el.find('.col-sm-9 h1.Title').text(),
-            description = el.find('.col-sm-9 .Description p').text(),
-            status = el.find('.col-sm-9 .Type').text().trim(),
-            img = el.find('.Image img').attr('src');
+         let title = el.find('.col-sm-9 h1.Title').text();
+         let description = el.find('.col-sm-9 .Description p').text();
+         let status = el.find('.col-sm-9 .Type').text().trim();
+         let img = el.find('.Image img').attr('src');
 
          anime = {
             title,
@@ -284,6 +284,63 @@ async function getAnime(req, res) {
       res.status(200)
          .json({
             anime,
+            success: true
+         })
+
+   } catch (err) {
+      res.status(500)
+         .json({
+            message: err.message,
+            success: false
+         })
+   }
+}
+
+async function getAnimes(req, res) {
+   try {
+      let {
+         page
+      } = req.query;
+
+      if (!page) {
+         page = 1
+      }
+
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes?page=${page}`);
+      const $ = cheerio.load(bodyResponse.data);
+
+      const animes = [];
+
+      $('.animes .container .row article').each((i, e) => {
+         let el = $(e);
+
+         let id = el.find('a').attr('href');
+         id = id.split('/')[4]
+         let title = el.find('.Title').text();
+         let img = el.find('.Image img').attr('src');
+         let category = el.find('.category').text();
+         category = category.substring(1, category.length)
+         let year = parseInt(el.find('.fecha').text());
+
+         const anime = {
+            id,
+            title,
+            img,
+            category,
+            year
+         }
+
+         animes.push(anime);
+      })
+
+      let totalPages = $('.pagination').children().length;
+      totalPages = $('.pagination').find('.page-item')[totalPages - 2];
+      let pages = parseInt($(totalPages).text());
+
+      res.status(200)
+         .json({
+            animes,
+            pages,
             success: true
          })
 
@@ -438,13 +495,14 @@ async function getBy(req, res, multiple) {
 
       })
 
-      let totalPages = $('.pagination').find('.page-item')[7];
-      totalPages = parseInt($(totalPages).text())
+      let totalPages = $('.pagination').children().length;
+      totalPages = $('.pagination').find('.page-item')[totalPages - 2];
+      let pages = parseInt($(totalPages).text());
 
       res.status(200)
          .json({
             animes,
-            pages: totalPages,
+            pages,
             success: true
          })
 
@@ -512,6 +570,7 @@ module.exports = {
    getCategories,
    animeSearch,
    getAnime,
+   getAnimes,
    getEpisode,
    getBy,
    ovaSearch

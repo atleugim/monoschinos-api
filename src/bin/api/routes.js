@@ -8,6 +8,7 @@ const {
    getCategories,
    animeSearch,
    getAnime,
+   getAnimes,
    getEpisode,
    getBy,
    ovaSearch
@@ -26,6 +27,7 @@ api.get('/', (req, res) => {
             getLetters: '/letters',
             getCategories: '/categories',
             getAnime: '/anime/:id',
+            getAnimes: '/animes',
             getEpisode: '/episode/:id',
             searchByGender: '/gender/:gender',
             searchByLetter: '/letter/:letter',
@@ -64,6 +66,10 @@ api.get('/search/:name', (req, res) => {
 
 api.get('/anime/:id', (req, res) => {
    getAnime(req, res);
+})
+
+api.get('/animes', (req, res) => {
+   getAnimes(req, res);
 })
 
 api.get('/episode/:id', (req, res) => {
