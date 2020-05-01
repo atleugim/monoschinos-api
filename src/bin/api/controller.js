@@ -26,7 +26,7 @@ async function getLastest(req, res) {
          id = id.split('-')
          id.splice(id.length - 2, 2);
          id = `${id.join('-')}-episodio-${nEpisode}`;
-         
+
 
          let anime = {
             title,
@@ -193,7 +193,7 @@ async function getAnime(req, res) {
       let episodes = []
       $('.container .mt-2 .row').each((i, e) => {
          let el = $(e);
-         
+
          el.find('.col-sm-9 .generos a').each((i, e) => {
             let el = $(e);
 
@@ -273,7 +273,7 @@ async function getEpisode(req, res) {
       // Get video link OP1
       let title = $('.Episode .Title-epi').text();
       let animeId = id.split('-');
-      
+
       if (animeId.includes('episodio')) {
          animeId = animeId.splice(0, animeId.length - 2).join('-');
       } else {
@@ -285,10 +285,10 @@ async function getEpisode(req, res) {
 
       const videos = [];
       let videosContainer = $('.Episode .content .row .TPlayer').text();
-      
+
       $(videosContainer).each((i, e) => {
          let el = $(e);
-         
+
          let video = el.attr('src');
 
          if (video) {
@@ -296,14 +296,14 @@ async function getEpisode(req, res) {
             video = decodeURIComponent(video)
             video = video.split('&id')[0]
          }
-         
-         
+
+
          if (video) {
             videos.push(video)
          }
-         
+
       })
-      
+
       // res.send(videos)
       /* Old
          video1 = video1.split('=')[1];
@@ -388,7 +388,7 @@ async function getAnimeByGender(req, res) {
       })
 
       let totalPages = $('.pagination').find('.page-item')[7];
-          totalPages = parseInt($(totalPages).text())
+      totalPages = parseInt($(totalPages).text())
 
       res.status(200)
          .json({
@@ -467,6 +467,7 @@ async function ovaSearch(req, res) {
          let img = el.find('.link-anime .Image img').attr('src');
          let title = el.find('.link-anime .Title').text();
 
+
          let ova = {
             id,
             img,
@@ -477,9 +478,13 @@ async function ovaSearch(req, res) {
 
       })
 
+      let totalPages = $('.pagination').find('.page-item')[7];
+      totalPages = parseInt($(totalPages).text())
+
       res.status(200)
          .json({
             ovas,
+            pages: totalPages,
             success: true
          })
 
