@@ -196,7 +196,15 @@ async function getAnime(req, res) {
          
          el.find('.col-sm-9 .generos a').each((i, e) => {
             let el = $(e);
-            genders.push(el.text())
+
+            let title = el.text();
+            let id = el.attr('href').split('/')[4]
+            let gender = {
+               title,
+               id
+            }
+
+            genders.push(gender)
          })
 
          let title = el.find('.col-sm-9 h1.Title').text(),
