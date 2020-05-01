@@ -4,7 +4,7 @@ const appConfig = {
 }
 
 const apiConfig = {
-   lastest: 'https://monoschinos.com',
+   baseUrl: 'https://monoschinos.com',
    searchAnime: 'https://monoschinos.com/search?q=',
    viewAnime: 'https://monoschinos.com/anime',
    viewEpisode: 'https://monoschinos.com/ver',

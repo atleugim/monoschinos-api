@@ -7,7 +7,7 @@ const {
 
 async function getLastest(req, res) {
    try {
-      const bodyResponse = await axios.get(`${apiConfig.lastest}`);
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}`);
       const $ = cheerio.load(bodyResponse.data);
 
       const animes = [];
@@ -55,30 +55,29 @@ async function getLastest(req, res) {
 
 async function getGenders(req, res) {
    try {
-      const bodyResponse = await axios.get(`${apiConfig.lastest}/animes`);
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
       const $ = cheerio.load(bodyResponse.data);
 
       const genders = []
 
       let gendersContainer = $('.filter-container .clearfix .float-left')[1];
 
-      let genres = $(gendersContainer).find('.dropdown-menu .dropdown-item');
+      $(gendersContainer).find('.dropdown-menu .dropdown-item')
+         .each((i, e) => {
+            let el = $(e)
 
-      genres.each((i, e) => {
-         let el = $(e)
-
-         let title = el.text();
-         if (title.charAt() == ' ') {
-            title = title.substring(1, title.length)
-         }
-         let id = el.attr('href');
-         id = id.split('/')[2];
-         let gender = {
-            title,
-            id
-         }
-         genders.push(gender)
-      })
+            let title = el.text();
+            if (title.charAt() == ' ') {
+               title = title.substring(1, title.length)
+            }
+            let id = el.attr('href');
+            id = id.split('/')[2];
+            let gender = {
+               title,
+               id
+            }
+            genders.push(gender)
+         })
 
       res.status(200)
          .json({
@@ -97,29 +96,28 @@ async function getGenders(req, res) {
 
 async function getLetters(req, res) {
    try {
-      const bodyResponse = await axios.get(`${apiConfig.lastest}/animes`);
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
       const $ = cheerio.load(bodyResponse.data);
 
       const letters = []
 
       let lettersContainer = $('.filter-container .clearfix .float-left')[3];
-      let letts = $(lettersContainer).find('.dropdown-menu .dropdown-item');
+      $(lettersContainer).find('.dropdown-menu .dropdown-item')
+         .each((i, e) => {
+            let el = $(e)
 
-      letts.each((i, e) => {
-         let el = $(e)
-
-         let title = el.text();
-         // if (title.charAt() == ' ') {
-         //    title = title.substring(1, title.length)
-         // }
-         let id = el.attr('href');
-         id = id.split('/')[2];
-         let letter = {
-            title,
-            id
-         }
-         letters.push(letter)
-      })
+            let title = el.text();
+            // if (title.charAt() == ' ') {
+            //    title = title.substring(1, title.length)
+            // }
+            let id = el.attr('href');
+            id = id.split('/')[2];
+            let letter = {
+               title,
+               id
+            }
+            letters.push(letter)
+         })
 
       res.status(200)
          .json({
@@ -127,6 +125,43 @@ async function getLetters(req, res) {
             success: true
          })
 
+   } catch (err) {
+      res.status(500)
+         .json({
+            message: err.message,
+            success: false
+         })
+   }
+}
+
+async function getCategories(req, res) {
+   try {
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
+      const $ = cheerio.load(bodyResponse.data);
+
+      const categories = []
+
+      let categoriesContainer = $('.filter-container .clearfix .float-left')[0];
+      $(categoriesContainer).find('.dropdown-menu .dropdown-item')
+         .each((i, e) => {
+            let el = $(e)
+
+            let title = el.text();
+
+            let id = el.attr('href');
+            id = id.split('/')[2];
+            let category = {
+               title,
+               id
+            }
+            categories.push(category)
+         })
+
+      res.status(200)
+         .json({
+            categories,
+            success: true
+         })
    } catch (err) {
       res.status(500)
          .json({
@@ -355,10 +390,12 @@ async function getEpisode(req, res) {
    }
 }
 
-async function getAnimeByGender(req, res) {
+async function getBy(req, res, multiple) {
    try {
       let {
-         gender
+         gender,
+         letter,
+         category
       } = req.params;
 
       let {
@@ -369,62 +406,17 @@ async function getAnimeByGender(req, res) {
          page = 1
       }
 
-      const bodyResponse = await axios.get(`${apiConfig.searchGender}/${gender}?page=${page}`);
-      const $ = cheerio.load(bodyResponse.data);
+      let bodyResponse;
 
-      const animes = [];
-
-      $('.animes .container .row article').each((i, e) => {
-         let el = $(e);
-         let id = el.find('.link-anime').attr('href');
-         id = id.split('/')[4];
-         let img = el.find('.link-anime .Image img').attr('src');
-         let title = el.find('.link-anime .Title').text();
-
-         let anime = {
-            id,
-            img,
-            title
-         }
-
-         animes.push(anime);
-
-      })
-
-      let totalPages = $('.pagination').find('.page-item')[7];
-      totalPages = parseInt($(totalPages).text())
-
-      res.status(200)
-         .json({
-            animes,
-            pages: totalPages,
-            success: true
-         })
-
-   } catch (err) {
-      res.status(500)
-         .json({
-            message: err.message,
-            success: false
-         })
-   }
-}
-
-async function getAnimeByLetter(req, res) {
-   try {
-      let {
-         letter
-      } = req.params;
-
-      let {
-         page
-      } = req.query;
-
-      if (!page) {
-         page = 1
+      if (multiple) {
+         bodyResponse = await axios.get(`${apiConfig.baseUrl}/categoria/${category}/genero/${gender}?page=${page}`);
+      } else if (gender && !multiple) {
+         bodyResponse = await axios.get(`${apiConfig.baseUrl}/genero/${gender}?page=${page}`);
+      } else if (letter && !multiple) {
+         bodyResponse = await axios.get(`${apiConfig.baseUrl}/letra/${letter}?page=${page}`);
+      } else if (category && !multiple) {
+         bodyResponse = await axios.get(`${apiConfig.baseUrl}/categoria/${category}?page=${page}`);
       }
-
-      const bodyResponse = await axios.get(`${apiConfig.searchLetter}/${letter}?page=${page}`);
       const $ = cheerio.load(bodyResponse.data);
 
       const animes = [];
@@ -517,10 +509,10 @@ module.exports = {
    getLastest,
    getGenders,
    getLetters,
+   getCategories,
    animeSearch,
    getAnime,
    getEpisode,
-   getAnimeByGender,
-   getAnimeByLetter,
+   getBy,
    ovaSearch
 }
