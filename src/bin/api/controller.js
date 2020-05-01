@@ -387,9 +387,13 @@ async function getAnimeByGender(req, res) {
 
       })
 
+      let totalPages = $('.pagination').find('.page-item')[7];
+          totalPages = parseInt($(totalPages).text())
+
       res.status(200)
          .json({
             animes,
+            pages: totalPages,
             success: true
          })
 
