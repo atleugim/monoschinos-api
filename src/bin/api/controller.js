@@ -230,6 +230,10 @@ async function getAnime(req, res) {
          })
       })
 
+      if (!anime.episodes) {
+         anime.episodes = []
+      }
+
       res.status(200)
          .json({
             anime,
