@@ -1,4 +1,4 @@
-# Monoschinos-API (v1.0.6)
+# Monoschinos-API (v1.0.7)
 :fire: **API** built to extract data from Monoschinos.com by web scrapping, get all animes subtitled in spanish. \
 
 ### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
@@ -52,18 +52,18 @@ $ http://localhost:3000/api/v1
 ```js
 // return lastest episodes added to the site
    "animes": [
-    {
-      "title": "Heya Camp: Sauna to Gohan to Miwa Bike",
-      "img": "https://monoschinos.com/image/portada/290/165/heya-camp-sauna-to-gohan-to-miwa-bike.jpg",
-      "id": "heya-camp-sauna-to-gohan-to-miwa-bike-sub-espanol",
-      "nEpisode": "1"
-    },
-    {
-      "title": "Plunderer",
-      "img": "https://monoschinos.com/image/portada/290/165/plunderer.jpg",
-      "id": "plunderer-sub-espanol",
-      "nEpisode": "16"
-    },
+      {
+         "title": "Toaru Kagaku no Railgun T",
+         "img": "https://monoschinos.com/image/episode/290/165/toaru-kagaku-no-railgun-t-13.jpg",
+         "id": "toaru-kagaku-no-railgun-t-episodio-13",
+         "nEpisode": 13
+      },
+      {
+         "title": "Kemono Friends: Youkoso Japari Park e!",
+         "img": "https://monoschinos.com/image/episode/290/165/kemono-friends-youkoso-japari-park-e-26.jpg",
+         "id": "kemono-friends-youkoso-japari-park-e-episodio-26",
+         "nEpisode": 26
+      },
       // ...
    ],
    "success": true
@@ -90,8 +90,8 @@ $ http://localhost:3000/api/v1
          "img": "https://monoschinos.com/image/imagen/160/224/toradora-bentou-no-gokui.jpg"
        },
        // ...
-  ],
-  "success": true
+   ],
+   "success": true
 ```
 
 #
@@ -113,8 +113,8 @@ $ http://localhost:3000/api/v1
          "id": "aventura"
       },
       // ...
-   ]
-  "success": true
+   ],
+   "success": true
 ```
 
 #
@@ -141,7 +141,30 @@ $ http://localhost:3000/api/v1
       },
       // ...
    ]
-  "success": true
+   "success": true
+```
+
+#
+>Method: **GET** \
+> Route: **/categories**
+
+```js
+// return all categories options for category search
+   "categories": [
+      {
+         "title": "Todo"
+      },
+      {
+         "title": "Anime",
+         "id": "anime"
+      },
+      {
+         "title": "Ova",
+         "id": "ova"
+      },
+      // ...
+   ]
+   "success": true
 ```
 #
 >Method: **GET** \
@@ -180,32 +203,37 @@ $ http://localhost:3000/api/v1
 
 ```json
 >> return a single episode video information
-   "title": "Plunderer 16 Sub Español",
-   "animeId": "plunderer-sub-espanol",
-   "epNumber": 16,
+   "title": "Toradora! 1 Sub Español",
+   "animeId": "toradora-sub-espanol",
+   "epNumber": 1,
    "videos": [
-       "https://www.fembed.com/v/7rpprtg56klwn-p",
-       "https://clipwatching.com/embed-xvy59wjfi0v3.html",
-       "https://uqload.com/embed-ibodkth3sexy.html",
-       "https://videobin.co/embed-jmcngaf8t2fn.html",
-       "https://www.mp4upload.com/embed-7ntp2j1t8llp.html",
-       "https://ok.ru/videoembed/1893744839217"
+      "https://www.fembed.com/v/dkjjktxwdl6jnr5",
+      "https://clipwatching.com/embed-6rswzfw05oqr.html",
+      "https://uqload.com/embed-jpj31oi3ksjj.html",
+      "https://videobin.co/embed-c44qc9a4nox5.html",
+      "https://www.mp4upload.com/embed-409yelco3k8w.html",
+      "https://ok.ru/videoembed/1893674191409"
    ],
    "downloads": [
-      "https://mega.nz/#!znAD1IpI!pxBJLi43AEWLYAHv2R-pD1XDvjOMocaf4vBXkBi0Ndc",
-      "https://bayfiles.com/LcXfAaL6nc",
-      "https://www.solidfiles.com/v/R4BeDDRZLnAYk",
-      "https://1fichier.com/?2e568pwg3w6vn10n2xk3"
+      "https://mega.nz/#!f6JzRASL!8SRmVCgGWpB1Ap_VtTqrh8NQw8cB_h5BaK7SvpkTWpU",
+      "https://www.solidfiles.com/v/R4BejD7LQjvQR",
+      "https://bayfiles.com/9b00AaLcn6",
+      "https://1fichier.com/?rf29pge5b69snktt7bcl"
    ],
    "success": true
 ```
 #
 >Method: **GET** \
-> Route: **/gender/:id?page=pageNumber**
+> Route: **/gender/:id?page=#**
 
 ```js
 // return animes wich name contains the input gender and within the pageNumber query, default pageNumber is 1
    "animes": [
+      {
+         "id": "hidan-no-aria-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/hidan-no-aria.jpg",
+         "title": "Hidan no Aria"
+      },
       {
          "id": "dorohedoro-ma-no-omake-sub-espanol",
          "img": "https://monoschinos.com/image/imagen/160/224/dorohedoro-ma-no-omake.png",
@@ -218,7 +246,7 @@ $ http://localhost:3000/api/v1
 ```
 #
 >Method: **GET** \
-> Route: **/letter/:letter?page=pageNumber**
+> Route: **/letter/:letter?page=#**
 
 ```js
 // return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
@@ -228,19 +256,69 @@ $ http://localhost:3000/api/v1
          "img": "https://monoschinos.com/image/imagen/160/224/tv-yarou-nanaana-kaibutsu-kraken-wo-oe.jpg",
          "title": "TV Yarou Nanaana: Kaibutsu Kraken wo Oe!"
       },
+      {
+         "id": "tsugumomo-segunda-temporada-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/tsugumomo-segunda-temporada.jpg",
+         "title": "Tsugumomo Segunda temporada"
+      },
       // ...
    ],
    "pages": 7,
    "success": true
 ```
 
+#
+>Method: **GET** \
+> Route: **/category/:category?page=#**
+
+```js
+// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
+   "animes": [
+      {
+         "id": "kaijuu-no-kodomo-espiritus-del-mar-latino-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/kaijuu-no-kodomo-espiritus-del-mar-latino.png",
+         "title": "Kaijuu no Kodomo (Espíritus del Mar) Latino"
+      },
+      {
+         "id": "hello-world-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/hello-world.jpg",
+         "title": "Hello World"
+      },
+      // ...
+   ],
+   "pages": 15,
+   "success": true
+```
 
 #
 >Method: **GET** \
-> Route: **/ovas/:pageNumber**
+> Route: **/category/:category/gender/:gender?page=#**
 
 ```js
-// return ovas by page and total count of pages, because in site can't search ovas by input
+// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
+   "animes": [
+      {
+         "id": "dorohedoro-ma-no-omake-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/dorohedoro-ma-no-omake.png",
+         "title": "Dorohedoro: Ma no Omake"
+      },
+      {
+         "id": "strike-the-blood-iv-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/strike-the-blood-iv.jpg",
+         "title": "Strike the Blood IV"
+      },
+      // ...
+   ],
+   "pages": 5,
+   "success": true
+```
+
+#
+>Method: **GET** \
+> Route: **/ovas/:#**
+
+```js
+// return ovas by page and total count of pages, because in site can't search ovas by input # is a param for page request
    "ovas": [
       {
          "id": "strike-the-blood-iv-sub-espanol",
