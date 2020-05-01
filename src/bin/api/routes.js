@@ -22,7 +22,7 @@ api.get('/', (req, res) => {
          repository: 'https://github.com/atleugim/monoschinos-api',
          docs: 'https://github.com/atleugim/monoschinos-api/blob/master/README.md',
          endpoints: {
-            lastest: '/animes/lastest',
+            lastest: '/lastest',
             search: '/search/:name',
             getGenders: '/genders',
             getLetters: '/letters',
@@ -40,7 +40,7 @@ api.get('/', (req, res) => {
       })
 })
 
-api.get('/animes/lastest', (req, res) => {
+api.get('/lastest', (req, res) => {
    getLastest(req, res);
 })
 

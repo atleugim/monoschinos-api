@@ -1,4 +1,4 @@
-# Monoschinos-API (v1.0.7)
+# Monoschinos-API (v1.0.8)
 :fire: **API** built to extract data from Monoschinos.com by web scrapping, get all animes subtitled in spanish.
 
 ### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
@@ -47,7 +47,7 @@ $ http://localhost:3000/api/v1
 #
 
 >Method: **GET** \
-> Route: **/animes/lastest**
+> Route: **/lastest**
 
 ```js
 // return lastest episodes added to the site
@@ -72,7 +72,7 @@ $ http://localhost:3000/api/v1
 > Route: **/search/:input**
 
 ```js
-// return animes wich name match with input search
+// return animes wich name contains the input search
    "animes": [
        {
          "title": "Toradora!",
@@ -184,13 +184,18 @@ $ http://localhost:3000/api/v1
          {
            "title": "Escolares",
            "id": "escolares"
-         }
+         },
+         // ...
        ],
       "img": "https://monoschinos.com/assets/img/serie/imagen/toradora.jpg",
       "episodes": [
          {
             "episode": 25,
             "id": "toradora-episodio-25"
+         },
+         {
+            "episode": 24,
+            "id": "toradora-episodio-24"
          },
          // ...
       ]
@@ -202,7 +207,7 @@ $ http://localhost:3000/api/v1
 > Route: **/episode/:id**
 
 ```json
->> return a single episode video information
+>> return a single episode video information with multiple video an download options
    "title": "Toradora! 1 Sub Español",
    "animeId": "toradora-sub-espanol",
    "epNumber": 1,
@@ -227,7 +232,7 @@ $ http://localhost:3000/api/v1
 > Route: **/gender/:id?page=#**
 
 ```js
-// return animes wich name contains the input gender and within the pageNumber query, default pageNumber is 1
+// return animes wich contains the input gender and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
    "animes": [
       {
          "id": "hidan-no-aria-sub-espanol",
@@ -249,7 +254,7 @@ $ http://localhost:3000/api/v1
 > Route: **/letter/:letter?page=#**
 
 ```js
-// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
+// return animes wich contains the input letter and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
    "animes": [
       {
          "id": "tv-yarou-nanaana-kaibutsu-kraken-wo-oe-sub-espanol",
@@ -272,7 +277,7 @@ $ http://localhost:3000/api/v1
 > Route: **/category/:category?page=#**
 
 ```js
-// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
+// return animes wich contains the input category and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
    "animes": [
       {
          "id": "kaijuu-no-kodomo-espiritus-del-mar-latino-sub-espanol",
@@ -295,7 +300,7 @@ $ http://localhost:3000/api/v1
 > Route: **/category/:category/gender/:gender?page=#**
 
 ```js
-// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
+// return animes wich name contains the input category and the input gender within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
    "animes": [
       {
          "id": "dorohedoro-ma-no-omake-sub-espanol",

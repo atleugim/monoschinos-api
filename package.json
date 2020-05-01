@@ -1,6 +1,6 @@
 {
   "name": "monoschinos-api",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "API built to extract data from monoschinos.com, search animes without restrictions and subtitled.",
   "main": "src/index.js",
   "scripts": {
