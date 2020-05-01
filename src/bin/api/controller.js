@@ -345,7 +345,11 @@ async function getAnimeByGender(req, res) {
          gender
       } = req.params;
 
-      const bodyResponse = await axios.get(`${apiConfig.searchGender}/${gender}`);
+      let {
+         page
+      } = req.query;
+
+      const bodyResponse = await axios.get(`${apiConfig.searchGender}/${gender}?page=${page}`);
       const $ = cheerio.load(bodyResponse.data);
 
       const animes = [];
