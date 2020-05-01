@@ -365,6 +365,10 @@ async function getAnimeByGender(req, res) {
          page
       } = req.query;
 
+      if (!page) {
+         page = 1
+      }
+
       const bodyResponse = await axios.get(`${apiConfig.searchGender}/${gender}?page=${page}`);
       const $ = cheerio.load(bodyResponse.data);
 
@@ -412,7 +416,15 @@ async function getAnimeByLetter(req, res) {
          letter
       } = req.params;
 
-      const bodyResponse = await axios.get(`${apiConfig.searchLetter}/${letter}`);
+      let {
+         page
+      } = req.query;
+
+      if (!page) {
+         page = 1
+      }
+
+      const bodyResponse = await axios.get(`${apiConfig.searchLetter}/${letter}?page=${page}`);
       const $ = cheerio.load(bodyResponse.data);
 
       const animes = [];

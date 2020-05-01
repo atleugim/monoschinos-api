@@ -1,4 +1,4 @@
-# Monoschinos-API (v1.0.3)
+# Monoschinos-API (v1.0.6)
 :fire: **API** built to extract data from Monoschinos.com by web scrapping, get all animes subtitled in spanish. \
 
 ### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
@@ -153,16 +153,23 @@ $ http://localhost:3000/api/v1
       "title": "Toradora! Sub Español",
       "description": "Ryuuji Takasu es un estudiante...",
       "status": "Finalizado",
-      "genres": [
-         "Comedia",
-         "Escolares"
-      ],
+      "genders": [
+         {
+           "title": "Comedia",
+           "id": "comedia"
+         },
+         {
+           "title": "Escolares",
+           "id": "escolares"
+         }
+       ],
       "img": "https://monoschinos.com/assets/img/serie/imagen/toradora.jpg",
       "episodes": [
          {
             "episode": 25,
             "id": "toradora-episodio-25"
          },
+         // ...
       ]
    },
    "success": true
@@ -176,32 +183,45 @@ $ http://localhost:3000/api/v1
    "title": "Plunderer 16 Sub Español",
    "animeId": "plunderer-sub-espanol",
    "epNumber": 16,
-   "video": "https://reproductor.monoschinos.com/aqua/cl?url=16PLUNDER.mp4&id",
-   "download": "https://mega.nz/#!yQ93jbqT!PzEiY4T5nQPPIVLF7gWXkHhyfyB8agmNUJM7DVDKPbk",
-   "success": true
-```
-#
->Method: **GET** \
-> Route: **/gender/:genderId**
-
-```js
-// return animes that match with the input gender id
-   "animes": [
-      {
-         "id": "yesterday-wo-utatte-extra-sub-espanol",
-         "img": "https://monoschinos.com/image/imagen/160/224/yesterday-wo-utatte-extra.png",
-         "title": "Yesterday wo Utatte Extra"
-      },
-      // ...
+   "videos": [
+       "https://www.fembed.com/v/7rpprtg56klwn-p",
+       "https://clipwatching.com/embed-xvy59wjfi0v3.html",
+       "https://uqload.com/embed-ibodkth3sexy.html",
+       "https://videobin.co/embed-jmcngaf8t2fn.html",
+       "https://www.mp4upload.com/embed-7ntp2j1t8llp.html",
+       "https://ok.ru/videoembed/1893744839217"
+   ],
+   "downloads": [
+      "https://mega.nz/#!znAD1IpI!pxBJLi43AEWLYAHv2R-pD1XDvjOMocaf4vBXkBi0Ndc",
+      "https://bayfiles.com/LcXfAaL6nc",
+      "https://www.solidfiles.com/v/R4BeDDRZLnAYk",
+      "https://1fichier.com/?2e568pwg3w6vn10n2xk3"
    ],
    "success": true
 ```
 #
 >Method: **GET** \
-> Route: **/letter/:letter**
+> Route: **/gender/:id?page=pageNumber**
 
 ```js
-// return animes wich name contains the input letter
+// return animes wich name contains the input gender and within the pageNumber query, default pageNumber is 1
+   "animes": [
+      {
+         "id": "dorohedoro-ma-no-omake-sub-espanol",
+         "img": "https://monoschinos.com/image/imagen/160/224/dorohedoro-ma-no-omake.png",
+         "title": "Dorohedoro: Ma no Omake"
+      },
+      // ...
+   ],
+   "pages": 45,
+   "success": true
+```
+#
+>Method: **GET** \
+> Route: **/letter/:letter?page=pageNumber**
+
+```js
+// return animes wich name contains the input letter and within the pageNumber query, default pageNumber is 1
    "animes": [
       {
          "id": "tv-yarou-nanaana-kaibutsu-kraken-wo-oe-sub-espanol",
@@ -210,6 +230,7 @@ $ http://localhost:3000/api/v1
       },
       // ...
    ],
+   "pages": 7,
    "success": true
 ```
 
@@ -219,7 +240,7 @@ $ http://localhost:3000/api/v1
 > Route: **/ovas/:pageNumber**
 
 ```js
-// return ovas by page, because in site can't search ovas by input
+// return ovas by page and total count of pages, because in site can't search ovas by input
    "ovas": [
       {
          "id": "strike-the-blood-iv-sub-espanol",
@@ -227,7 +248,8 @@ $ http://localhost:3000/api/v1
          "title": "Strike the Blood IV"
       },
       // ...
-   ]
+   ],
+   "pages": 13,
    "success": true
 ```
 
