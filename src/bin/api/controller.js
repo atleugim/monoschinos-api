@@ -13,12 +13,13 @@ async function getLastest(req, res) {
       const animes = [];
 
       let getLastest = $('.container .caps .container')[0];
-      getLastest = $(getLastest).find('.row article');
 
-      $(getLastest).each((i, e) => {
+      $(getLastest).find('.row article').each((i, e) => {
          let el = $(e);
          let title = el.find('.Title').html().split('\t')[0]
          let img = el.find('.Image img').attr('src');
+         let type = el.find('.Image figure span').text();
+         type = type.substring(1, type.length)
          let nEpisode = el.find('.dataEpi .episode').text();
          nEpisode = parseInt(nEpisode.split('\n')[1])
          let id = el.find('a').attr('href');
@@ -32,7 +33,8 @@ async function getLastest(req, res) {
             title,
             img,
             id,
-            nEpisode
+            nEpisode,
+            type
          }
 
          animes.push(anime);
@@ -484,11 +486,15 @@ async function getBy(req, res, multiple) {
          id = id.split('/')[4];
          let img = el.find('.link-anime .Image img').attr('src');
          let title = el.find('.link-anime .Title').text();
+         let type = el.find('.link-anime .info .category').text();
+         let year = el.find('.link-anime .info .fecha').text();
 
          let anime = {
             id,
             img,
-            title
+            title,
+            type,
+            year
          }
 
          animes.push(anime);
