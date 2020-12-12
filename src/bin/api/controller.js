@@ -55,6 +55,56 @@ async function getLastest(req, res) {
    }
 }
 
+async function getEmision(req, res) {
+   try {
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/emision`);
+      const $ = cheerio.load(bodyResponse.data);
+
+      const animes = [];
+
+      let getEmision = $('.animes .container')[0];
+
+      $(getEmision).find('.row article').each((i, e) => {
+         let el = $(e);
+         let title = el.find('.Title').html().split('\t')[0]
+         let img = el.find('.Image img').attr('src');
+         let type = el.find('.Image figure span').text();
+         type = type.substring(1, type.length)
+         let nEpisode = el.find('.dataEpi .episode').text();
+         nEpisode = parseInt(nEpisode.split('\n')[1])
+         let id = el.find('a').attr('href');
+         id = id.split('/')[4]
+         id = id.split('-')
+         id.splice(id.length - 2, 2);
+         id = `${id.join('-')}-episodio-${nEpisode}`;
+
+
+         let anime = {
+            title,
+            img,
+            id,
+            nEpisode,
+            type
+         }
+
+         animes.push(anime);
+      })
+
+      res.status(200)
+         .json({
+            animes,
+            success: true
+         })
+
+   } catch (err) {
+      res.status(500)
+         .json({
+            message: err.message,
+            success: false
+         })
+   }
+}
+
 async function getGenders(req, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
@@ -571,6 +621,7 @@ async function ovaSearch(req, res) {
 
 module.exports = {
    getLastest,
+   getEmision,
    getGenders,
    getLetters,
    getCategories,

@@ -3,6 +3,7 @@ api = express.Router();
 
 const {
    getLastest,
+   getEmision,
    getGenders,
    getLetters,
    getCategories,
@@ -19,9 +20,11 @@ api.get('/', (req, res) => {
       .json({
          message: 'API Working!',
          author: 'Miguel Vega',
-         repository: 'https://github.com/atleugim/monoschinos-api',
+         maintainer: 'CarlosBurelo',
+         repository: 'https://github.com/carlos-burelo/monoschinos-api',
          endpoints: {
             lastest: '/lastest',
+            getEmision: '/emision',
             search: '/search/:name',
             getGenders: '/genders',
             getLetters: '/letters',
@@ -42,6 +45,10 @@ api.get('/', (req, res) => {
 api.get('/lastest', (req, res) => {
    getLastest(req, res);
 })
+api.get('/emision', (req, res) => {
+   getEmision(req, res);
+})
+
 
 api.get('/animes/gendersAndLetters', (req, res) => {
    getGendersAndLetters(req, res);
