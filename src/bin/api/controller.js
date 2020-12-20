@@ -57,42 +57,49 @@ async function getLastest(req, res) {
 
 async function getEmision(req, res) {
    try {
-      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/emision`);
+      let {
+         page
+      } = req.query;
+
+      if (!page) {
+         page = 1
+      }
+
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/emision?page=${page}`);
       const $ = cheerio.load(bodyResponse.data);
 
       const animes = [];
 
-      let getEmision = $('.animes .container')[0];
-
-      $(getEmision).find('.row article').each((i, e) => {
+      $('.animes .container .row article').each((i, e) => {
          let el = $(e);
-         let title = el.find('.Title').html().split('\t')[0]
-         let img = el.find('.Image img').attr('src');
-         let type = el.find('.Image figure span').text();
-         type = type.substring(1, type.length)
-         let nEpisode = el.find('.dataEpi .episode').text();
-         nEpisode = parseInt(nEpisode.split('\n')[1])
+
          let id = el.find('a').attr('href');
          id = id.split('/')[4]
-         id = id.split('-')
-         id.splice(id.length - 2, 2);
-         id = `${id.join('-')}-episodio-${nEpisode}`;
+         let title = el.find('.Title').text();
+         let img = el.find('.Image img').attr('src');
+         let category = el.find('.category').text();
+         category = category.substring(1, category.length)
+         let year = parseInt(el.find('.fecha').text());
 
-
-         let anime = {
+         const anime = {
+            id,
             title,
             img,
-            id,
-            nEpisode,
-            type
+            category,
+            year
          }
 
          animes.push(anime);
       })
 
+      let totalPages = $('.pagination').children().length;
+      totalPages = $('.pagination').find('.page-item')[totalPages - 2];
+      let pages = parseInt($(totalPages).text());
+
       res.status(200)
          .json({
             animes,
+            pages,
             success: true
          })
 
@@ -275,9 +282,32 @@ async function getAnime(req, res) {
       const $ = cheerio.load(bodyResponse.data);
 
       let anime = new Object();
-
       let genders = []
       let episodes = []
+      let sugestions = []
+      
+      $('.container .row .col-12 .recom article').each((i, e) => {
+         let el = $(e);
+
+         let id = el.find('a').attr('href');
+         id = id.split('/')[4]
+         let title = el.find('a .Title').text();
+         let img = el.find('a .Image img').attr('src');
+         // let category = el.find('.category').text();
+         // category = category.substring(1, category.length)
+         let year = parseInt(el.find('.fecha').text());
+
+         const sugestionAnime = {
+            id,
+            title,
+            img,
+            // category,
+            year
+         }
+
+         sugestions.push(sugestionAnime);
+      })
+
       $('.container .mt-2 .row').each((i, e) => {
          let el = $(e);
 
@@ -297,15 +327,22 @@ async function getAnime(req, res) {
          let title = el.find('.col-sm-9 h1.Title').text();
          let description = el.find('.col-sm-9 .Description p').text();
          let status = el.find('.col-sm-9 .Type').text().trim();
+         let date1 = el.find('.col-sm-9 .after-title:nth-child(n)').text();
+         let date = date1.replace(/ /gi, "") //Espacios en Blanco
+         .replace(/\n/gi, "") // \n saltos de linea visibles
+         .replace(/Finalizado/gi, '') //Palabra innesesaria
+         .replace(/Estreno/gi, '') // --------- innesesaria
+         .replace(/Anime/gi, '') // --------- innesesaria
          let img = el.find('.Image img').attr('src');
-
          anime = {
             title,
             description,
             status,
-            genders,
+            date,
             img,
-            id
+            id,
+            genders,
+            sugestions
          }
       })
 
@@ -347,6 +384,7 @@ async function getAnime(req, res) {
          })
    }
 }
+
 
 async function getAnimes(req, res) {
    try {
