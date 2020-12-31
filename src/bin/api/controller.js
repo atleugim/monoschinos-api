@@ -285,33 +285,29 @@ async function getAnime(req, res) {
       let genders = []
       let episodes = []
       let sugestions = []
-      
+      let banner = ''
       $('.container .row .col-12 .recom article').each((i, e) => {
          let el = $(e);
-
          let id = el.find('a').attr('href');
          id = id.split('/')[4]
          let title = el.find('a .Title').text();
          let img = el.find('a .Image img').attr('src');
-         // let category = el.find('.category').text();
-         // category = category.substring(1, category.length)
          let year = parseInt(el.find('.fecha').text());
 
          const sugestionAnime = {
             id,
             title,
             img,
-            // category,
             year
          }
 
          sugestions.push(sugestionAnime);
       })
 
-      $('.container .mt-2 .row').each((i, e) => {
+      $('.TPost.Serie.Single').each((i, e) => {
          let el = $(e);
 
-         el.find('.col-sm-9 .generos a').each((i, e) => {
+         el.find('.container .mt-2 .row .col-sm-9 .generos a').each((i, e) => {
             let el = $(e);
 
             let title = el.text();
@@ -320,22 +316,18 @@ async function getAnime(req, res) {
                title,
                id
             }
-
             genders.push(gender)
          })
-
-         let title = el.find('.col-sm-9 h1.Title').text();
-         let description = el.find('.col-sm-9 .Description p').text();
-         let status = el.find('.col-sm-9 .Type').text().trim();
-         let date1 = el.find('.col-sm-9 .after-title:nth-child(n)').text();
-         let date = date1.replace(/ /gi, "") //Espacios en Blanco
-         .replace(/\n/gi, "") // \n saltos de linea visibles
-         .replace(/Finalizado/gi, '') //Palabra innesesaria
-         .replace(/Estreno/gi, '') // --------- innesesaria
-         .replace(/Anime/gi, '') // --------- innesesaria
+         let banner = el.find('.Banner img').attr('src');
+         let title = el.find('h1.Title').text();
+         let description = el.find(' .row .col-sm-9 .Description p').text();
+         let status = el.find(' .row .col-sm-9 .Type').text().trim();
+         let date1 = el.find(' .row .col-sm-9 .after-title:nth-child(n)').text();
+         let date = date1.replace(/ /gi, "").replace(/\n/gi, "").replace(/Finalizado/gi, '').replace(/Estreno/gi, '').slice(0, 10)
          let img = el.find('.Image img').attr('src');
          anime = {
             title,
+            banner,
             description,
             status,
             date,
@@ -384,7 +376,6 @@ async function getAnime(req, res) {
          })
    }
 }
-
 
 async function getAnimes(req, res) {
    try {
@@ -451,8 +442,6 @@ async function getEpisode(req, res) {
 
       const bodyResponse = await axios.get(`${apiConfig.viewEpisode}/${id}`);
       const $ = cheerio.load(bodyResponse.data);
-
-      // Get video link OP1
       let title = $('.Episode .Title-epi').text();
       let animeId = id.split('-');
 

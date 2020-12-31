@@ -1,10 +1,6 @@
-// const appConfig = {
-//    host: process.env.HOST | 'localhost',
-//    port: process.env.PORT | '4000'
-// }
 const appConfig = {
-   host: 'localhost',
-   port: '4000'
+   host: process.env.HOST || 'localhost',
+   port: process.env.PORT || 4000
 }
 
 const apiConfig = {
