@@ -474,37 +474,23 @@ async function getEpisode(req, res) {
          }
 
       })
-
-      // res.send(videos)
-      /* Old
-         video1 = video1.split('=')[1];
-         video1 = video1.split('&')[0];
-         // DecodeURIComponent to set right link format
-         video1 = decodeURIComponent(video1);
-
-         // Get JW-Player DOM
-         const videoRes1 = await axios.get(video1);
-         let $v1 = cheerio.load(videoRes1.data);
-         // Destructuring JW-Player DOM by String methods to get the source link
-         let vidString1 = $v1.html().toString();
-         let strStartV1 = vidString1.search('sources'),
-            strEndV1 = vidString1.search(']');
-         let sources1 = vidString1.substring(strStartV1, strEndV1 + 1);
-
-         let vidSource1 = sources1.split("'")[1]
-      */
-
       let downloads = [];
       let downloadsContainer = $('.Episode .content .row #downloads table tbody tr');
 
       $(downloadsContainer).each((i, e) => {
          let el = $(e);
 
-         let download = el.find('a').attr('href')
-
-         if (download) {
-            downloads.push(download);
-         }
+         let link = el.find('a').attr('href')
+         let sn = link.replace(/www./gi, '').replace(/.com/gi, '')
+         let servername = sn.slice(8)
+         let svn = servername.indexOf("/")
+         let server = servername.slice(0, svn)
+         console.log(server)
+            let down = {
+               server,
+               link
+            }
+            downloads.push(down)
       })
 
       res.status(200)
