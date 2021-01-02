@@ -374,8 +374,15 @@ async function getEpisode(req, res) {
          animeId = animeId.splice(0, animeId.length - 1)
       }
       animeId = `${animeId}-sub-espanol`;
-      let epNumber = title.split(' ');
-      epNumber = parseInt(epNumber[epNumber.length - 3]);
+      let splittedTitle = title.trim().split(' ');
+
+      let epNumber = 0;
+
+      if (splittedTitle.includes('sub') || splittedTitle.includes('Sub')) {
+         epNumber = splittedTitle[splittedTitle.length - 3];
+      } else {
+         epNumber = splittedTitle[splittedTitle.length - 1];
+      }
 
       const videos = [];
       let videosContainer = $('.Episode .content .row .TPlayer').text();
