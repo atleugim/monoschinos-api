@@ -8,7 +8,7 @@ const siteUrl = 'https://monoschinos2.com';
 const apiConfig = {
    baseUrl: siteUrl,
    searchAnime: `${siteUrl}/search?q=`,
-   viewAnime: `'${siteUrl}/anime`,
+   viewAnime: `${siteUrl}/anime`,
    viewEpisode: `${siteUrl}/ver`,
    searchGender: `${siteUrl}/genero`,
    searchLetter: `${siteUrl}/letra`,
