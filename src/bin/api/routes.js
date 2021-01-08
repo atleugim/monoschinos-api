@@ -15,7 +15,7 @@ const {
    ovaSearch
 } = require('./controller');
 
-api.get('/', (req, res) => {
+api.get('/', (_, res) => {
    res.status(200)
       .json({
          message: 'API Working!',
@@ -42,7 +42,7 @@ api.get('/', (req, res) => {
       })
 })
 
-api.get('/lastest', (req, res) => {
+api.get('/latest', (req, res) => {
    getLastest(req, res);
 })
 api.get('/emision', (req, res) => {
@@ -66,7 +66,6 @@ api.get('/categories', (req, res) => {
    getCategories(req, res);
 })
 
-// Search anime by name
 api.get('/search/:name', (req, res) => {
    animeSearch(req, res);
 })

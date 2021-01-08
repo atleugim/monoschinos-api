@@ -3,6 +3,8 @@ const appConfig = {
    port: process.env.PORT || 4000
 }
 
+const siteUrl = 'https://monoschinos2.com';
+
 const apiConfig = {
    baseUrl: 'https://monoschinos2.com',
    emisionAnimes: 'https://monoschinos2.com/emision',

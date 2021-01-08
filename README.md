@@ -1,7 +1,8 @@
 # Monoschinos-API (v1.0.8)
+
 :fire: **API** built to extract data from Monoschinos.com by web scrapping, get all animes subtitled in spanish.
 
-****
+### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
 
 ## **Tools**
 
@@ -13,42 +14,47 @@
 - [x] morgan
 - [x] nodemon
 
-****
+---
 
 ## **Usage**
-> **Install** 
+
+> **Install**
+
 ```bash
-$ git clone https://github.com/atleugim/monoschinos-api.git 
+$ git clone https://github.com/atleugim/monoschinos-api.git
 
 $ npm install
 ```
 
-> **Run server with _NODE_**: 
+> **Run server with _NODE_**:
+
 ```bash
 $ npm run start
 ```
 
-> **Run server with _NODEMON_**: 
+> **Run server with _NODEMON_**:
+
 ```bash
 $ npm run dev
 ```
 
-****
+---
 
 ## **Endpoints**
 
 > **BASE_URL:**
+
 ```bash
 $ http://localhost:3000/api/v1
 ```
 
 #
 
->Method: **GET** \
-> Route: **/lastest**
+> Method: **GET** \
+> Route: **/latest**
 
 ```js
-// return lastest episodes added to the site
+// return latest episodes added to the site
    "animes": [
       {
          "title": "Toaru Kagaku no Railgun T",
@@ -66,7 +72,8 @@ $ http://localhost:3000/api/v1
    ],
    "success": true
 ```
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/search/:input**
 
 ```js
@@ -93,7 +100,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/genders**
 
 ```js
@@ -116,7 +124,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/letters**
 
 ```js
@@ -143,7 +152,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/categories**
 
 ```js
@@ -164,8 +174,10 @@ $ http://localhost:3000/api/v1
    ]
    "success": true
 ```
+
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/anime/:id**
 
 ```js
@@ -200,8 +212,10 @@ $ http://localhost:3000/api/v1
    },
    "success": true
 ```
+
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/episode/:id**
 
 ```json
@@ -225,8 +239,10 @@ $ http://localhost:3000/api/v1
    ],
    "success": true
 ```
+
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/gender/:id?page=#**
 
 ```js
@@ -247,8 +263,10 @@ $ http://localhost:3000/api/v1
    "pages": 45,
    "success": true
 ```
+
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/letter/:letter?page=#**
 
 ```js
@@ -271,7 +289,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/category/:category?page=#**
 
 ```js
@@ -294,7 +313,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/category/:category/gender/:gender?page=#**
 
 ```js
@@ -317,7 +337,8 @@ $ http://localhost:3000/api/v1
 ```
 
 #
->Method: **GET** \
+
+> Method: **GET** \
 > Route: **/ovas/:#**
 
 ```js
@@ -335,4 +356,5 @@ $ http://localhost:3000/api/v1
 ```
 
 ## **Author**
+
 > Miguel Vega
