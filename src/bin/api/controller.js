@@ -55,6 +55,63 @@ async function getLastest(req, res) {
    }
 }
 
+async function getEmision(req, res) {
+   try {
+      let {
+         page
+      } = req.query;
+
+      if (!page) {
+         page = 1
+      }
+
+      const bodyResponse = await axios.get(`${apiConfig.baseUrl}/emision?page=${page}`);
+      const $ = cheerio.load(bodyResponse.data);
+
+      const animes = [];
+
+      $('.animes .container .row article').each((i, e) => {
+         let el = $(e);
+
+         let id = el.find('a').attr('href');
+         id = id.split('/')[4]
+         let title = el.find('.Title').text();
+         let img = el.find('.Image img').attr('src');
+         let category = el.find('.category').text();
+         category = category.substring(1, category.length)
+         let year = parseInt(el.find('.fecha').text());
+
+         const anime = {
+            id,
+            title,
+            img,
+            category,
+            year
+         }
+
+         animes.push(anime);
+      })
+
+      let totalPages = $('.pagination').children().length;
+      totalPages = $('.pagination').find('.page-item')[totalPages - 2];
+      let pages = parseInt($(totalPages).text());
+
+      res.status(200)
+         .json({
+            animes,
+            pages,
+            success: true
+         })
+
+   } catch (err) {
+      res.status(500)
+         .json({
+            message: err.message,
+            success: false
+         })
+   }
+}
+
 async function getGenders(req, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
@@ -225,13 +282,32 @@ async function getAnime(req, res) {
       const $ = cheerio.load(bodyResponse.data);
 
       let anime = new Object();
-
       let genders = []
       let episodes = []
-      $('.container .mt-2 .row').each((i, e) => {
+      let sugestions = []
+      let banner = ''
+      $('.container .row .col-12 .recom article').each((i, e) => {
+         let el = $(e);
+         let id = el.find('a').attr('href');
+         id = id.split('/')[4]
+         let title = el.find('a .Title').text();
+         let img = el.find('a .Image img').attr('src');
+         let year = parseInt(el.find('.fecha').text());
+
+         const sugestionAnime = {
+            id,
+            title,
+            img,
+            year
+         }
+
+         sugestions.push(sugestionAnime);
+      })
+
+      $('.TPost.Serie.Single').each((i, e) => {
          let el = $(e);
 
-         el.find('.col-sm-9 .generos a').each((i, e) => {
+         el.find('.container .mt-2 .row .col-sm-9 .generos a').each((i, e) => {
             let el = $(e);
 
             let title = el.text();
@@ -240,22 +316,25 @@ async function getAnime(req, res) {
                title,
                id
             }
-
             genders.push(gender)
          })
-
-         let title = el.find('.col-sm-9 h1.Title').text();
-         let description = el.find('.col-sm-9 .Description p').text();
-         let status = el.find('.col-sm-9 .Type').text().trim();
+         let banner = el.find('.Banner img').attr('src');
+         let title = el.find('h1.Title').text();
+         let description = el.find(' .row .col-sm-9 .Description p').text();
+         let status = el.find(' .row .col-sm-9 .Type').text().trim();
+         let date1 = el.find(' .row .col-sm-9 .after-title:nth-child(n)').text();
+         let date = date1.replace(/ /gi, "").replace(/\n/gi, "").replace(/Finalizado/gi, '').replace(/Estreno/gi, '').slice(0, 10)
          let img = el.find('.Image img').attr('src');
-
          anime = {
             title,
+            banner,
             description,
             status,
-            genders,
+            date,
             img,
-            id
+            id,
+            genders,
+            sugestions
          }
       })
 
@@ -363,8 +442,6 @@ async function getEpisode(req, res) {
 
       const bodyResponse = await axios.get(`${apiConfig.viewEpisode}/${id}`);
       const $ = cheerio.load(bodyResponse.data);
-
-      // Get video link OP1
       let title = $('.Episode .Title-epi').text();
       let animeId = id.split('-');
 
@@ -404,37 +481,23 @@ async function getEpisode(req, res) {
          }
 
       })
-
-      // res.send(videos)
-      /* Old
-         video1 = video1.split('=')[1];
-         video1 = video1.split('&')[0];
-         // DecodeURIComponent to set right link format
-         video1 = decodeURIComponent(video1);
-
-         // Get JW-Player DOM
-         const videoRes1 = await axios.get(video1);
-         let $v1 = cheerio.load(videoRes1.data);
-         // Destructuring JW-Player DOM by String methods to get the source link
-         let vidString1 = $v1.html().toString();
-         let strStartV1 = vidString1.search('sources'),
-            strEndV1 = vidString1.search(']');
-         let sources1 = vidString1.substring(strStartV1, strEndV1 + 1);
-
-         let vidSource1 = sources1.split("'")[1]
-      */
-
       let downloads = [];
       let downloadsContainer = $('.Episode .content .row #downloads table tbody tr');
 
       $(downloadsContainer).each((i, e) => {
          let el = $(e);
 
-         let download = el.find('a').attr('href')
-
-         if (download) {
-            downloads.push(download);
-         }
+         let link = el.find('a').attr('href')
+         let sn = link.replace(/www./gi, '').replace(/.com/gi, '')
+         let servername = sn.slice(8)
+         let svn = servername.indexOf("/")
+         let server = servername.slice(0, svn)
+         console.log(server)
+            let down = {
+               server,
+               link
+            }
+            downloads.push(down)
       })
 
       res.status(200)
@@ -578,6 +641,7 @@ async function ovaSearch(req, res) {
 
 module.exports = {
    getLastest,
+   getEmision,
    getGenders,
    getLetters,
    getCategories,

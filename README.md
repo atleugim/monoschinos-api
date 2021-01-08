@@ -4,8 +4,6 @@
 
 ### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
 
----
-
 ## **Tools**
 
 - [x] axios
