@@ -20,22 +20,27 @@ api.get('/', (_, res) => {
       .json({
          message: 'API Working!',
          author: 'Miguel Vega',
-         maintainer: 'CarlosBurelo',
-         repository: 'https://github.com/carlos-burelo/monoschinos-api',
+         repository: 'https://github.com/atleugim/monoschinos-api.git',
+         contributors: [
+            {
+               username: "@carlos-burelo",
+               profile: "https://github.com/carlos-burelo"
+            }
+         ],
          endpoints: {
-            lastest: '/lastest',
+            latest: '/latest',
             getEmision: '/emision',
             search: '/search/:name',
             getGenders: '/genders',
             getLetters: '/letters',
             getCategories: '/categories',
             getAnime: '/anime/:id',
-            getAnimes: '/animes?page=#',
+            getAnimes: '/animes?page=${n}',
             getEpisode: '/episode/:id',
-            searchByGender: '/gender/:gender?page=#',
-            searchByLetter: '/letter/:letter?page=#',
-            searchByCategory: '/category/:category?page=#',
-            getMultiple: '/category/:category/gender/:gender?page=#',
+            searchByGender: '/gender/:gender?page=${n}',
+            searchByLetter: '/letter/:letter?page=${n}',
+            searchByCategory: '/category/:category?page=${n}',
+            getMultiple: '/category/:category/gender/:gender?page=${n}',
             searchOva: '/ovas/:page'
          },
          success: true,
