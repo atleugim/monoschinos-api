@@ -34,7 +34,7 @@ async function getLastest(req, res) {
             img,
             id,
             nEpisode,
-            type
+            category: type
          }
 
          animes.push(anime);
@@ -241,17 +241,23 @@ async function animeSearch(req, res) {
 
       const animes = [];
 
-      $('.animes .row article').each((i, e) => {
+      $('.animes .row article').each((_, e) => {
          let el = $(e);
-         let title = el.find('h3.Title').text(),
-            img = el.find('div.Image .cover .img-fluid').attr('src'),
-            id = el.find('a.link-anime').attr('href');
+         let title = el.find('h3.Title').text();
+         let img = el.find('div.Image .cover .img-fluid').attr('src');
+         let id = el.find('a.link-anime').attr('href');
          id = id.split('/')[4];
+         let category = el.find('.info span.category').text().trim();
+         let year = parseInt(el.find('.info span.fecha').text().trim());
+
+         console.log(category)
 
          let anime = {
             title,
             id,
-            img
+            img,
+            category,
+            year
          }
 
          animes.push(anime);
