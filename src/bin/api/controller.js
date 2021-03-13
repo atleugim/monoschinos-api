@@ -1,5 +1,5 @@
-const cheerio = require('cheerio'),
-   axios = require('axios');
+const cheerio = require('cheerio');
+const axios = require('axios');
 
 const {
    apiConfig
@@ -655,6 +655,7 @@ module.exports = {
    getAnime,
    getAnimes,
    getEpisode,
+   getVideoSource,
    getBy,
    ovaSearch
 }

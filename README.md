@@ -1,6 +1,6 @@
 # Monoschinos-API (v1.0.8)
 
-:fire: **API** built to extract data from Monoschinos.com by web scrapping, get all animes subtitled in spanish.
+:fire: **API** built to extract data from monoschinos.com by web scrapping, get all animes subtitled in spanish.
 
 ### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
 
@@ -218,8 +218,8 @@ $ http://localhost:3000/api/v1
 > Method: **GET** \
 > Route: **/episode/:id**
 
-```json
->> return a single episode video information with multiple video an download options
+```js
+   // return a single episode video information with multiple video an download options
    "title": "Toradora! 1 Sub Español",
    "animeId": "toradora-sub-espanol",
    "epNumber": 1,
@@ -243,10 +243,10 @@ $ http://localhost:3000/api/v1
 #
 
 > Method: **GET** \
-> Route: **/gender/:id?page=#**
+> Route: **/gender/:id?page=${page}**
 
 ```js
-// return animes wich contains the input gender and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
+// return animes wich contains the input gender and within the 'page' query, if no 'page' query provided, default page is 1, also returns the page count available for search
    "animes": [
       {
          "id": "hidan-no-aria-sub-espanol",
@@ -267,10 +267,10 @@ $ http://localhost:3000/api/v1
 #
 
 > Method: **GET** \
-> Route: **/letter/:letter?page=#**
+> Route: **/letter/:letter?page=${page}**
 
 ```js
-// return animes wich contains the input letter and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
+// return animes wich contains the input letter and within the 'page' query, if no 'page' query provided, default page is 1, also returns the page count available for search
    "animes": [
       {
          "id": "tv-yarou-nanaana-kaibutsu-kraken-wo-oe-sub-espanol",
@@ -291,10 +291,10 @@ $ http://localhost:3000/api/v1
 #
 
 > Method: **GET** \
-> Route: **/category/:category?page=#**
+> Route: **/category/:category?page=${page}**
 
 ```js
-// return animes wich contains the input category and within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
+// return animes wich contains the input category and within the 'page' query, if no 'page' query provided, default page is 1, also returns the page count available for search
    "animes": [
       {
          "id": "kaijuu-no-kodomo-espiritus-del-mar-latino-sub-espanol",
@@ -315,10 +315,10 @@ $ http://localhost:3000/api/v1
 #
 
 > Method: **GET** \
-> Route: **/category/:category/gender/:gender?page=#**
+> Route: **/category/:category/gender/:gender?page=${page}**
 
 ```js
-// return animes wich name contains the input category and the input gender within the 'page' query, if no 'page' query is provided default is 1, also returns the page count available for search
+// return animes wich name contains the input category and the input gender within the 'page' query, if no 'page' query, default page is 1, also returns the page count available for search
    "animes": [
       {
          "id": "dorohedoro-ma-no-omake-sub-espanol",
@@ -339,7 +339,7 @@ $ http://localhost:3000/api/v1
 #
 
 > Method: **GET** \
-> Route: **/ovas/:#**
+> Route: **/ovas/:${page}**
 
 ```js
 // return ovas by page and total count of pages, because in site can't search ovas by input # is a param for page request
@@ -354,6 +354,9 @@ $ http://localhost:3000/api/v1
    "pages": 13,
    "success": true
 ```
+
+### TODO:
+- Get video source from embed URL;
 
 ## **Author**
 
