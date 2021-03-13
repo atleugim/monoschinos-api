@@ -5,7 +5,7 @@ const {
    apiConfig
 } = require('../config');
 
-async function getLastest(req, res) {
+async function getLastest(_, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}`);
       const $ = cheerio.load(bodyResponse.data);
@@ -14,7 +14,7 @@ async function getLastest(req, res) {
 
       let getLastest = $('.container .caps .container')[0];
 
-      $(getLastest).find('.row article').each((i, e) => {
+      $(getLastest).find('.row article').each((_, e) => {
          let el = $(e);
          let title = el.find('.Title').html().split('\t')[0]
          let img = el.find('.Image img').attr('src');
@@ -70,7 +70,7 @@ async function getEmision(req, res) {
 
       const animes = [];
 
-      $('.animes .container .row article').each((i, e) => {
+      $('.animes .container .row article').each((_, e) => {
          let el = $(e);
 
          let id = el.find('a').attr('href');
@@ -112,7 +112,7 @@ async function getEmision(req, res) {
    }
 }
 
-async function getGenders(req, res) {
+async function getGenders(_, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
       const $ = cheerio.load(bodyResponse.data);
@@ -122,7 +122,7 @@ async function getGenders(req, res) {
       let gendersContainer = $('.filter-container .clearfix .float-left')[1];
 
       $(gendersContainer).find('.dropdown-menu .dropdown-item')
-         .each((i, e) => {
+         .each((_, e) => {
             let el = $(e)
 
             let title = el.text();
@@ -153,7 +153,7 @@ async function getGenders(req, res) {
    }
 }
 
-async function getLetters(req, res) {
+async function getLetters(_, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
       const $ = cheerio.load(bodyResponse.data);
@@ -162,13 +162,10 @@ async function getLetters(req, res) {
 
       let lettersContainer = $('.filter-container .clearfix .float-left')[3];
       $(lettersContainer).find('.dropdown-menu .dropdown-item')
-         .each((i, e) => {
+         .each((_, e) => {
             let el = $(e)
 
             let title = el.text();
-            // if (title.charAt() == ' ') {
-            //    title = title.substring(1, title.length)
-            // }
             let id = el.attr('href');
             id = id.split('/')[2];
             let letter = {
@@ -193,7 +190,7 @@ async function getLetters(req, res) {
    }
 }
 
-async function getCategories(req, res) {
+async function getCategories(_, res) {
    try {
       const bodyResponse = await axios.get(`${apiConfig.baseUrl}/animes`);
       const $ = cheerio.load(bodyResponse.data);
@@ -202,7 +199,7 @@ async function getCategories(req, res) {
 
       let categoriesContainer = $('.filter-container .clearfix .float-left')[0];
       $(categoriesContainer).find('.dropdown-menu .dropdown-item')
-         .each((i, e) => {
+         .each((_, e) => {
             let el = $(e)
 
             let title = el.text();
@@ -285,14 +282,14 @@ async function getAnime(req, res) {
       } = req.params;
 
       const bodyResponse = await axios.get(`${apiConfig.viewAnime}/${id}`);
+
       const $ = cheerio.load(bodyResponse.data);
 
       let anime = new Object();
       let genders = []
       let episodes = []
       let sugestions = []
-      let banner = ''
-      $('.container .row .col-12 .recom article').each((i, e) => {
+      $('.container .row .col-12 .recom article').each((_, e) => {
          let el = $(e);
          let id = el.find('a').attr('href');
          id = id.split('/')[4]
@@ -310,10 +307,10 @@ async function getAnime(req, res) {
          sugestions.push(sugestionAnime);
       })
 
-      $('.TPost.Serie.Single').each((i, e) => {
+      $('.TPost.Serie.Single').each((_, e) => {
          let el = $(e);
 
-         el.find('.container .mt-2 .row .col-sm-9 .generos a').each((i, e) => {
+         el.find('.container .mt-2 .row .col-sm-9 .generos a').each((_, e) => {
             let el = $(e);
 
             let title = el.text();
@@ -344,7 +341,7 @@ async function getAnime(req, res) {
          }
       })
 
-      $('.container .SerieCaps').each((i, e) => {
+      $('.container .SerieCaps').each((_, e) => {
          let el = $(e);
          let totalEpisodes = el.children().length;
 
@@ -398,7 +395,7 @@ async function getAnimes(req, res) {
 
       const animes = [];
 
-      $('.animes .container .row article').each((i, e) => {
+      $('.animes .container .row article').each((_, e) => {
          let el = $(e);
 
          let id = el.find('a').attr('href');
@@ -447,6 +444,9 @@ async function getEpisode(req, res) {
       } = req.params;
 
       const bodyResponse = await axios.get(`${apiConfig.viewEpisode}/${id}`);
+
+      console.log(bodyResponse.headers);
+
       const $ = cheerio.load(bodyResponse.data);
       let title = $('.Episode .Title-epi').text();
       let animeId = id.split('-');
@@ -470,7 +470,7 @@ async function getEpisode(req, res) {
       const videos = [];
       let videosContainer = $('.Episode .content .row .TPlayer').text();
 
-      $(videosContainer).each((i, e) => {
+      $(videosContainer).each((_, e) => {
          let el = $(e);
 
          let video = el.attr('src');
@@ -490,7 +490,7 @@ async function getEpisode(req, res) {
       let downloads = [];
       let downloadsContainer = $('.Episode .content .row #downloads table tbody tr');
 
-      $(downloadsContainer).each((i, e) => {
+      $(downloadsContainer).each((_, e) => {
          let el = $(e);
 
          let link = el.find('a').attr('href')
@@ -498,12 +498,12 @@ async function getEpisode(req, res) {
          let servername = sn.slice(8)
          let svn = servername.indexOf("/")
          let server = servername.slice(0, svn)
-         console.log(server)
-            let down = {
-               server,
-               link
-            }
-            downloads.push(down)
+
+         let down = {
+            server,
+            link
+         }
+         downloads.push(down)
       })
 
       res.status(200)
@@ -556,7 +556,7 @@ async function getBy(req, res, multiple) {
 
       const animes = [];
 
-      $('.animes .container .row article').each((i, e) => {
+      $('.animes .container .row article').each((_, e) => {
          let el = $(e);
          let id = el.find('.link-anime').attr('href');
          id = id.split('/')[4];
@@ -608,7 +608,7 @@ async function ovaSearch(req, res) {
 
       const ovas = [];
 
-      $('.animes .container .row article').each((i, e) => {
+      $('.animes .container .row article').each((_, e) => {
          let el = $(e);
          let id = el.find('.link-anime').attr('href');
          id = id.split('/')[4];
