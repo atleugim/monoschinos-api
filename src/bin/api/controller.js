@@ -655,7 +655,6 @@ module.exports = {
    getAnime,
    getAnimes,
    getEpisode,
-   getVideoSource,
    getBy,
    ovaSearch
 }
