@@ -1,8 +1,6 @@
-# Monoschinos-API (v1.0.8)
+# Monoschinos-API (v1.0.8) (No longer maintained)
 
-:fire: **API** built to extract data from monoschinos.com by web scrapping, get all animes subtitled in spanish.
-
-### Try it here: **[Monoschinos-API](https://monoschinos-api.herokuapp.com/api/v1)**
+:fire: **API** built to extract data from monoschinos2.com by web scrapping, get all animes subtitled in spanish.
 
 ## **Tools**
 
@@ -354,9 +352,6 @@ $ http://localhost:3000/api/v1
    "pages": 13,
    "success": true
 ```
-
-### TODO:
-- Get video source from embed URL;
 
 ## **Author**
 
