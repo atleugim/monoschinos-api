@@ -19,7 +19,7 @@
   "author": "Miguel Vega",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^0.28.0",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
